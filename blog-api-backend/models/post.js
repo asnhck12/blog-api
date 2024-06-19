@@ -4,7 +4,7 @@ const { DateTime } = require("luxon");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-    subject: { type: String, required: true },
+    title: { type: String, required: true },
     post: { type: String, required: true },
     timeStamp: { type: Date, default: Date.now },
     published: {type: Boolean},

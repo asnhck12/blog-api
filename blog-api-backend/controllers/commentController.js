@@ -3,17 +3,16 @@ const { body, validationResult } = require("express-validator");
 const Comment = require("../models/comment");
 
 //view comments
-exports.comments_get = asyncHandler(async(req, res, next) => {
+exports.comment_get = asyncHandler(async(req, res, next) => {
     const allComments = await Comment.find().sort({ timeStamp: -1 }).populate('blog').exec();
-    res.render("Comment_board", { user: req.user, comment_list: allComments, admin: req.admin });
+    return res.send(allComments);
 })
 
 //Get comment form
 exports.comment_create_get = (req, res, next) => {
-    res.render("comment", { user: req.user, errors: [], comment_list: [] });
 };
 
-//comment new blog
+//comment new submission
 exports.comment_create_send = [
     body("subject", "Please enter a subject more than 3 letters").trim().isLength({ min: 3 }).escape(),
     body("comment", "Please enter a comment more than 3 letters").trim().isLength({ min: 3 }).escape(),
@@ -30,12 +29,6 @@ exports.comment_create_send = [
 
         if (!errors.isEmpty()) {
             const allComments = await comment.find().sort({ timeStamp: -1 }).populate('blog').exec();
-            res.render("comment", {
-                user: req.user,
-                comment_list: allComments,
-                errors: errors.array(),
-                comment: comment,
-            });
             return;
         } else {
             await comment.save();
@@ -46,8 +39,8 @@ exports.comment_create_send = [
 
 //delete comment
 exports.comment_delete = asyncHandler(async (req,res, next) => {
-    await comment.findByIdAndDelete(req.params.id);
-    res.redirect("/");
+    await Comment.findByIdAndDelete(req.params.id);
+    res.redirect("/comments");
 })
 
 

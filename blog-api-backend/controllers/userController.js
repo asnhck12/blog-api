@@ -7,7 +7,8 @@ const passport = require("passport");
 // Display log in form
 exports.login_get = asyncHandler((req, res, next) => {
     const errorMessage = req.query.error ? 'Wrong username or password' : null;
-    res.render("login", { user: req.user, errorMessage });
+    res.send({user: req.user, errorMessage});
+    // res.render("login", { user: req.user, errorMessage });
   });
 
 // Log in Post
@@ -17,7 +18,7 @@ exports.log_in_post = (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.redirect('/login?error=true');
+    //   return res.redirect('/login?error=true');
     }
     req.logIn(user, (err) => {
       if (err) {
@@ -30,7 +31,7 @@ exports.log_in_post = (req, res, next) => {
 
 //Get new user form
 exports.sign_up_get = asyncHandler(async(req,res,next) => {
-    res.render("sign_up", { user:req.user, errors:null});
+    // res.render("sign_up", { user:req.user, errors:null});
 });
 
 //Post new user form
@@ -50,7 +51,7 @@ exports.sign_up_post = [
         const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        res.render("sign_up", {
+        res.send("sign_up", {
             user: req.body,
             errors: errors.array(),
         });
@@ -59,7 +60,7 @@ exports.sign_up_post = [
     try {
         const userExists = await User.findOne({ username: req.body.username }).collation({ locale: "en", strength: 2}).exec();
         if (userExists) {
-            res.render("sign_up", {
+            res.send("sign_up", {
                 user: req.body,
                 errors: [{ msg: "Username already exists" }],
             });
@@ -69,11 +70,10 @@ exports.sign_up_post = [
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         
         const user = new User({
-            firstname: req.body.firstname,
-            surname: req.body.surname,
             username: req.body.username,
+            email: req.body.email,
             password: hashedPassword,
-            membership: false,
+            author: false,
             admin: false,
         });
 
@@ -97,18 +97,18 @@ exports.admin_update_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        res.render('admin_confirmation', {
-            errors: errors.array(),
-        });
+        // res.render('admin_confirmation', {
+        //     errors: errors.array(),
+        // });
         return
     }
 
     const pass = process.env.ADMIN_PASS;
 
     if (req.body.password !== pass) {
-        res.render('admin_confirmation', {
-            errors: [{ msg: 'Invalid password'}],
-        });
+        // res.render('admin_confirmation', {
+        //     errors: [{ msg: 'Invalid password'}],
+        // });
         return;
     }
 

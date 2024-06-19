@@ -23,6 +23,9 @@ router.get('/log_out', user_controller.log_out);
 // GET Posts 
 router.get('/', post_controller.post_get);
 
+// GET single Post by ID  
+router.get('/:id', post_controller.post_detail);
+
 //Get Posts form
 router.get('/new_post', post_controller.post_create_get);
 
@@ -39,9 +42,9 @@ router.get('/comments', comment_controller.comment_get);
 router.get('/comments/new_comment', comment_controller.comment_create_get);
 
 //submit comments
-router.comment('/comments/new_comment', comment_controller.comment_create_send);
+router.post('/comments/new_comment', comment_controller.comment_create_send);
 
 //Delete comments
-router.comment('/comments/delete/:id', comment_controller.comment_delete);
+router.post('/comments/delete/:id', comment_controller.comment_delete);
 
 module.exports = router;
