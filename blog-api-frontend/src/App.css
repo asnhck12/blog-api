@@ -1,0 +1,35 @@
+#root {
+  min-height: 100vh;
+  text-align: center;
+  display: grid;
+  /* grid-template-rows: 100px 1fr 100px; */
+  width: 100%
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.fullDisplay {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.mainLoginSection, .mainSignupSection, .mainSection {
+  display: flex;
+  justify-content: center;
+  flex:auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+  align-items: center;
+  gap: 5px;
+}
