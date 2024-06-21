@@ -2,31 +2,42 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Post = require("../models/post");
 
-//view posts
-exports.post_get = asyncHandler(async(req, res, next) => {
-    const allPosts = await Post.find().sort({ timeStamp: -1 }).exec();
-    const postsSummary = allPosts.map(post => ({title: post.title, timeStamp: post.timeStamp}));
-    return res.send(postsSummary);
-})
+// View posts
+exports.post_get = asyncHandler(async (req, res, next) => {
+    try {
+        const allPosts = await Post.find().sort({ timeStamp: -1 }).exec();
+        // const postsSummary = allPosts.map(post => ({ title: post.title, timeStamp: post.timeStamp }));
+        res.json(allPosts);
+    } catch (error) {
+        next(error);
+    }
+});
 
-//view post in full
-exports.post_detail = asyncHandler(async(req, res, next) => {
-    const postId = req.params.id;
-    const post = await Post.findById(postId).exec();
-    return res.send(post);
-})
+// View post in full
+exports.post_detail = asyncHandler(async (req, res, next) => {
+    try {
+        const postId = req.params.id;
+        const post = await Post.findById(postId).exec();
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        res.json(post);
+    } catch (error) {
+        next(error);
+    }
+});
 
-//Get post form
-exports.post_create_get = (req, res, next) => {
-};
-
-//Post new blog
+// Post new blog
 exports.post_create_send = [
     body("title", "Please enter a title more than 3 letters").trim().isLength({ min: 3 }).escape(),
     body("post", "Please enter a post more than 3 letters").trim().isLength({ min: 3 }).escape(),
 
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
         const post = new Post({
             title: req.body.title,
@@ -36,20 +47,25 @@ exports.post_create_send = [
             username: req.user,
         });
 
-        if (!errors.isEmpty()) {
-            const allPosts = await Post.find().sort({ timeStamp: -1 }).populate('username').exec();
-            return;
-        } else {
-            await post.save();
-            res.redirect("/");
+        try {
+            const savedPost = await post.save();
+            res.status(201).json(savedPost);
+        } catch (error) {
+            next(error);
         }
     })
 ];
 
-//delete post
-exports.post_delete = asyncHandler(async (req,res, next) => {
-    await Post.findByIdAndDelete(req.params.id);
-    res.redirect("/");
-})
-
-
+// Delete post
+exports.post_delete = asyncHandler(async (req, res, next) => {
+    try {
+        const postId = req.params.id;
+        const post = await Post.findByIdAndDelete(postId);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        res.status(204).json({ message: "Post deleted" });
+    } catch (error) {
+        next(error);
+    }
+});

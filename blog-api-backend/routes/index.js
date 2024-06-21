@@ -6,13 +6,13 @@ const post_controller = require("../controllers/postController");
 const comment_controller = require("../controllers/commentController");
 
 // Get login page
-router.get('/login',user_controller.login_get);
+// router.get('/login',user_controller.login_get);
 
 // Login Submission
 router.post('/login',user_controller.log_in_post);
 
 // Get signup page
-router.get('/signup',user_controller.sign_up_get);
+// router.get('/signup',user_controller.sign_up_get);
 
 // Sign up submission
 router.post('/signup', user_controller.sign_up_post);
@@ -27,7 +27,7 @@ router.get('/', post_controller.post_get);
 router.get('/:id', post_controller.post_detail);
 
 //Get Posts form
-router.get('/new_post', post_controller.post_create_get);
+// router.get('/new_post', post_controller.post_create_get);
 
 //submit Posts
 router.post('/new_post', post_controller.post_create_send);
@@ -39,7 +39,7 @@ router.post('/delete/:id', post_controller.post_delete);
 router.get('/comments', comment_controller.comment_get);
 
 //Get comments form
-router.get('/comments/new_comment', comment_controller.comment_create_get);
+// router.get('/comments/new_comment', comment_controller.comment_create_get);
 
 //submit comments
 router.post('/comments/new_comment', comment_controller.comment_create_send);

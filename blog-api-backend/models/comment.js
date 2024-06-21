@@ -8,7 +8,7 @@ const CommentSchema = new Schema({
     subject: { type: String, required: true },
     comment: { type: String, required: true },
     timeStamp: { type: Date, default: Date.now },
-    post: { type: Schema.ObjectId, ref: "post" }
+    post: { type: Schema.ObjectId, ref: "Post" }
 })
 
 CommentSchema.virtual("url").get(function() {
