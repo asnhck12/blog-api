@@ -8,9 +8,9 @@ function HomePage () {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/');
+                const response = await fetch('http://localhost:3000/posts');
                 const responseData = await response.json();
-                console.log("Fetched posts:", responseData); // Log fetched data
+                console.log("Fetched posts:", responseData);
                 setPosts(responseData);
             } catch (error) {
                 console.log("error fetching posts", error);
@@ -24,6 +24,11 @@ function HomePage () {
     <>
     <div className="mainSection">
         <div className="mainImage">
+        </div>
+        <div className="newPostButton">
+            <Link to={'/new_post'}>
+            <button>New Posts</button>
+            </Link>
         </div>
         <div className="mainContent">
             {posts.map((post) => (

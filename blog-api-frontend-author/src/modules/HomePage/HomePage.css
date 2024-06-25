@@ -1,0 +1,7 @@
+
+.mainSection {
+    display: flex;
+    justify-content: center;
+    flex:auto;
+    flex-direction: column;
+  }

@@ -1,20 +1,26 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Comment = require("../models/comment");
+const Post = require("../models/post")
 
 // View comments
 exports.comment_get = asyncHandler(async (req, res, next) => {
+    const postId = req.params.id;
+    // const filter = { post:postId };
+    // postId ? { post: postId } : {};
+    
     try {
-        const allComments = await Comment.find().sort({ timeStamp: -1 }).populate('blog').exec();
+        const allComments = await Comment.find({ post: postId}).sort({ timeStamp: -1 }).exec();
         res.json(allComments);
     } catch (error) {
+        console.error("Error fetching comments:", error); 
         next(error);
     }
 });
 
 // Comment new submission
 exports.comment_create_send = [
-    body("subject", "Please enter a subject more than 3 letters").trim().isLength({ min: 3 }).escape(),
+    body("name", "Please enter a name more than 3 letters").trim().isLength({ min: 3 }).escape(),
     body("comment", "Please enter a comment more than 3 letters").trim().isLength({ min: 3 }).escape(),
 
     asyncHandler(async (req, res, next) => {
@@ -26,9 +32,9 @@ exports.comment_create_send = [
 
         const comment = new Comment({
             name: req.body.name,
-            subject: req.body.subject,
             comment: req.body.comment,
             timeStamp: new Date(),
+            post: req.body.post
         });
 
         try {

@@ -7,10 +7,12 @@ function Header () {
         <>
         <div className="header">
             <div className="logo">
+                <Link to='/'>
                 <h1>Blog<br />
-                Lite</h1>
+                                Lite</h1>
+            </Link>                    
             </div>
-            <div className="navBar">
+            {/* <div className="navBar">
                 <div className="homeButton">
                     <Link to='/'>Home</Link>
                 </div>
@@ -20,7 +22,7 @@ function Header () {
                 <div className="signupButton">
                 <Link to='Signup'>Signup</Link>
                 </div>
-            </div>
+            </div> */}
         </div>
         </>
     )

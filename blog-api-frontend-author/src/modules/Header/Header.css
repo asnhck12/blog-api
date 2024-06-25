@@ -11,6 +11,7 @@
   grid-template-columns: 1fr 1fr 60px;
     font-size: x-large;
     align-items: center;
+    /* text-align: right; */
 }
 
 .logo {

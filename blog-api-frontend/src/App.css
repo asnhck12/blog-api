@@ -19,12 +19,6 @@ body {
   height: 100vh;
 }
 
-.mainLoginSection, .mainSignupSection, .mainSection {
-  display: flex;
-  justify-content: center;
-  flex:auto;
-}
-
 form {
   display: flex;
   flex-direction: column;

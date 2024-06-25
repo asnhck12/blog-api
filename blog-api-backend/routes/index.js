@@ -21,30 +21,30 @@ router.post('/signup', user_controller.sign_up_post);
 router.get('/log_out', user_controller.log_out);
 
 // GET Posts 
-router.get('/', post_controller.post_get);
+router.get('/posts', post_controller.post_get);
 
 // GET single Post by ID  
-router.get('/:id', post_controller.post_detail);
+router.get('/posts/:id', post_controller.post_detail);
 
 //Get Posts form
 // router.get('/new_post', post_controller.post_create_get);
 
 //submit Posts
-router.post('/new_post', post_controller.post_create_send);
+router.post('/posts/new_post', post_controller.post_create_send);
 
 //Delete Posts
-router.post('/delete/:id', post_controller.post_delete);
+router.post('/posts/:id/delete', post_controller.post_delete);
 
 // GET Comments 
-router.get('/comments', comment_controller.comment_get);
+router.get('/posts/:id/comments', comment_controller.comment_get);
 
 //Get comments form
 // router.get('/comments/new_comment', comment_controller.comment_create_get);
 
 //submit comments
-router.post('/comments/new_comment', comment_controller.comment_create_send);
+router.post('/posts/:id/comments/new_comment', comment_controller.comment_create_send);
 
 //Delete comments
-router.post('/comments/delete/:id', comment_controller.comment_delete);
+router.post('/posts/:id/comments/delete', comment_controller.comment_delete);
 
 module.exports = router;

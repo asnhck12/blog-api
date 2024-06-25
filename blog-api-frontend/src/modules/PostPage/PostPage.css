@@ -1,0 +1,16 @@
+.commentSubmission {
+    display: flex;
+    justify-content: center;
+    flex:auto;
+    margin-bottom:30px;
+  }
+
+  .mainPostContent {
+    margin-bottom: 30px;
+  }
+
+  .mainPostSection {
+    display: flex;
+    flex:auto;
+    flex-direction: column;
+  }

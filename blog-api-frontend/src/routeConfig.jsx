@@ -10,7 +10,7 @@ const routesConfig = ([
       element: <App />,
       children: [
         {index: true, element:<HomePage />},
-        {path: "post", element: <PostPage />},
+        {path: ":id", element: <PostPage />},
         {path: "login", element: <LoginPage />},
         {path: "signup", element: <SignupPage />}
       ]

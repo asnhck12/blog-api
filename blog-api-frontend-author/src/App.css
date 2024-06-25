@@ -19,7 +19,7 @@ body {
   height: 100vh;
 }
 
-.mainLoginSection, .mainSignupSection, .mainSection {
+.mainSection {
   display: flex;
   justify-content: center;
   flex:auto;

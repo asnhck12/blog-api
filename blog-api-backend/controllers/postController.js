@@ -31,6 +31,7 @@ exports.post_detail = asyncHandler(async (req, res, next) => {
 exports.post_create_send = [
     body("title", "Please enter a title more than 3 letters").trim().isLength({ min: 3 }).escape(),
     body("post", "Please enter a post more than 3 letters").trim().isLength({ min: 3 }).escape(),
+    body("published").isBoolean().withMessage("Published must be a boolean"),
 
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
@@ -43,7 +44,7 @@ exports.post_create_send = [
             title: req.body.title,
             post: req.body.post,
             timeStamp: new Date(),
-            published: false,
+            published: req.body.published,
             username: req.user,
         });
 
