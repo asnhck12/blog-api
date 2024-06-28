@@ -4,6 +4,7 @@ import HomePage from "./modules/HomePage/HomePage"
 import SignupPage from "./modules/SignupPage/SignupPage"
 import LoginPage from "./modules/LoginPage/LoginPage"
 import NewPostPage from "./modules/NewPostPage/NewPostPage"
+// import Header from "./modules/Header/Header"
 
 const routesConfig = ([
     {

@@ -27,21 +27,26 @@ function LoginPage () {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to submit post');
+                throw new Error('Failed to submit login');
             }
 
             const result = await response.json();
-            console.log('Post submitted successfully:', result);
+            console.log('Login successfully:', result);
+            console.log('Login successfully token:', result.token);
+
+            localStorage.setItem('token', result.token);
 
             // Clear form fields
             setUsername('');
             setPassword('');
 
             navigate('/');
+            
         } catch (error) {
             console.error('Error submitting post:', error);
         }
     };
+
     return (
     <>
     <div className="mainLoginSection">

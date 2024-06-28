@@ -1,27 +1,35 @@
+require("dotenv").config();
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
+const { blacklistToken } = require('../middleware/jwtMiddleware');
 
 // Log in Post
 exports.log_in_post = (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            return res.status(401).json({ message: "Wrong username or password" });
-        }
-        req.logIn(user, (err) => {
+    passport.authenticate("local", async (err, user, info) => {
+        try {
             if (err) {
                 return next(err);
             }
-            return res.status(200).json({ message: "Login successful", user });
-        });
+            if (!user) {
+                return res.status(401).json({ message: "Wrong username or password" });
+            }
+            req.logIn(user, async (err) => {
+                if (err) {
+                    return next(err);
+                }
+                const token = jwt.sign({ user }, process.env.jwtSecret, { expiresIn: '1h' });
+
+                return res.status(200).json({ message: "Login successful", token });
+            });
+        } catch (err) {
+            return next(err);
+        }
     })(req, res, next);
 };
-
 
 //Post new user form
 exports.sign_up_post = [
@@ -58,8 +66,6 @@ exports.sign_up_post = [
                 username: req.body.username,
                 email: req.body.email,
                 password: hashedPassword,
-                author: false,
-                admin: false,
             });
 
             await user.save();
@@ -70,37 +76,16 @@ exports.sign_up_post = [
     })
 ];
 
-// // Display users admin status
-// exports.admin_update_get = asyncHandler(async (req, res, next) => {
-//     res.json({ user: req.user });
-// });
-
-// // Update users admin status
-// exports.admin_update_post = [
-//     body('password', 'Please enter your password').trim().isLength({ min: 8 }).escape(),
-//     asyncHandler(async (req, res, next) => {
-//         const errors = validationResult(req);
-
-//         if (!errors.isEmpty()) {
-//             return res.status(400).json({ errors: errors.array() });
-//         }
-
-//         const pass = process.env.ADMIN_PASS;
-
-//         if (req.body.password !== pass) {
-//             return res.status(401).json({ errors: [{ msg: 'Invalid password' }] });
-//         }
-
-//         const user = await User.findById(req.user);
-//         user.admin = true;
-//         await user.save();
-
-//         res.status(200).json({ message: "Admin status updated" });
-//     })
-// ];
-
 // Log out
 exports.log_out = asyncHandler(async (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+        return res.status(403).json({ message: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    blacklistToken(token);
+
     req.logout((err) => {
         if (err) {
             return next(err);

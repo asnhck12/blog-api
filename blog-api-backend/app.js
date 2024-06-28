@@ -1,14 +1,19 @@
 require("dotenv").config();
 var createError = require('http-errors');
 var express = require('express');
+
+const session = require("express-session");
 const cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-// const jwt = require('jswebtoken');
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
+const User = require("./models/user");
+
+// const jwt = require('jsonwebtoken');
 
 var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -18,6 +23,7 @@ const passport = require("passport");
 mongoose.set("strictQuery", false);
 
 const mongoDB = process.env.MONGODB_URI;
+const jwtSecret = process.env.jwtSecret;
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -28,12 +34,50 @@ async function main() {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+// app.use(jwt({secret: jwtSecret}).unless({path: ['/login', '/signup']}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username: username });
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch(err) {
+    done(err);
+  };
+});
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
@@ -42,6 +86,11 @@ app.use('/', indexRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+app.use((req, res, next) => {
+  console.log("headers " + req.headers )
+  next();
+})
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -54,8 +103,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000, () =>
-  console.log(`Example app listening on port 3000!`),
-);
+// app.listen(3000, () =>
+//   console.log(`Example app listening on port 3000!`),
+// );
 
 module.exports = app;

@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Post = require("../models/post");
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 // View posts
 exports.post_get = asyncHandler(async (req, res, next) => {
@@ -40,6 +42,12 @@ exports.post_create_send = [
             return res.status(400).json({ errors: errors.array() });
         }
 
+        jwt.verify(req.token, process.env.jwtSecret, async (err, authData) => {
+
+            if (err) {
+                return res.sendStatus(403); // Forbidden
+            }
+
         const post = new Post({
             title: req.body.title,
             post: req.body.post,
@@ -48,13 +56,14 @@ exports.post_create_send = [
             username: req.user,
         });
 
-        try {
+        try{
             const savedPost = await post.save();
             res.status(201).json(savedPost);
         } catch (error) {
             next(error);
         }
     })
+})
 ];
 
 // Delete post

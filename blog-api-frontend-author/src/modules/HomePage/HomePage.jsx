@@ -23,21 +23,21 @@ function HomePage () {
     return (
     <>
     <div className="mainSection">
-        <div className="mainImage">
-        </div>
         <div className="newPostButton">
-            <Link to={'/new_post'}>
-            <button>New Posts</button>
-            </Link>
+            <div className="homePageTitle">
+                <h1>My Posts</h1>
+            </div>
+            <div className="newPostButton">
+                <Link to={'/new_post'}>
+                <button>Add a New Post</button>
+                </Link>
+            </div>
         </div>
         <div className="mainContent">
             {posts.map((post) => (
                 <div key={post._id} className="postSection">
-                    <Link to={`/${post._id}`}>
-                    <h3>{post.title}</h3>
-                    <p>{post._id}</p>
-                    <p>{post.timeStamp}</p>
-                    </Link>
+                    <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
+                    <p>by {post.user}, {post.timeStamp}</p>  
                     </div>
             ))}
         </div>

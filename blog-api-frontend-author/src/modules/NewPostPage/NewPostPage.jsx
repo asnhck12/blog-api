@@ -1,6 +1,7 @@
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import './NewPostPage.css';
+import { fetchWithAuth } from "../../../utils/api";
 
 function NewPostPage () {
     const [title, setTitle] = useState("");
@@ -19,16 +20,15 @@ function NewPostPage () {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/posts/new_post', {
+            const response = await fetchWithAuth('http://localhost:3000/posts/new_post', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify(newPostData)
+             
             });
 
             if (!response.ok) {
-                throw new Error('Failed to submit post');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to submit post');
             }
 
             const result = await response.json();
@@ -42,9 +42,11 @@ function NewPostPage () {
             navigate('/');
         } catch (error) {
             console.error('Error submitting post:', error);
+            console.log('post:', newPostData);
+
         }
     };
-    
+
     return (
     <>
     <div className="mainSignupSection">
