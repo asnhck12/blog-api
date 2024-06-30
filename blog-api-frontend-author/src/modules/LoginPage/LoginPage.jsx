@@ -1,11 +1,12 @@
 import { useState } from "react";
 import './LoginPage.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 
 function LoginPage () {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const { setLoggedInStatus } = useOutletContext();
 
     const navigate = useNavigate();
 
@@ -35,6 +36,7 @@ function LoginPage () {
             console.log('Login successfully token:', result.token);
 
             localStorage.setItem('token', result.token);
+            setLoggedInStatus(true);
 
             // Clear form fields
             setUsername('');

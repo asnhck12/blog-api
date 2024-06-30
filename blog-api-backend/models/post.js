@@ -8,7 +8,7 @@ const PostSchema = new Schema({
     post: { type: String, required: true },
     timeStamp: { type: Date, default: Date.now },
     published: {type: Boolean},
-    username: { type: Schema.ObjectId, ref: "User" },
+    username: { type: Schema.ObjectId, ref: "User", required: true },
 })
 
 PostSchema.virtual("url").get(function() {

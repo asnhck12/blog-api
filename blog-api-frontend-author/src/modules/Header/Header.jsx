@@ -2,10 +2,14 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../auth/auth';
+import { fetchWithAuth } from '../../../utils/api';
+// import { useOutletContext } from "react-router-dom";
 
-function Header () {
+// eslint-disable-next-line react/prop-types
+function Header ({setLoggedIn}) {
 
     const navigate = useNavigate();
+    // const { loggedInStatus } = useOutletContext();
 
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -13,7 +17,7 @@ function Header () {
         const token = localStorage.getItem('token');
     
         try {
-            const response = await fetch('http://localhost:3000/log_out', {
+            const response = await fetchWithAuth('http://localhost:3000/log_out', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +28,8 @@ function Header () {
             if (response.ok) {
                 localStorage.removeItem("token");
                 navigate('/');
-                console.log(token);
+                setLoggedIn(false);
+                
             } else {
                 console.error('Failed to logout:', response.status);
             }
@@ -37,37 +42,34 @@ function Header () {
 
     return (
         <>
-        <div className="header">
-            <div className="logo">
-                <h1>Blog<br />
-                Lite</h1>
+    <div className="header">
+        <div className="logo">
+            <h1>Blog<br />Lite</h1>
+        </div>
+        <div className="navBar">
+            <div className="homeButton">
+                <Link to='/'>Home</Link>
             </div>
-            <div className="navBar">
-                {isLoggedIn ? (
-                    <>
-                    <div className="homeButton">
-                    <Link to='/'>Home</Link>
-                </div>
-                <div className="logoutButton">
-                <button onClick={handleLogout}>Logout</button>
-                </div>
+            {isLoggedIn ? (
+                <>
+                    <div className="logoutButton">
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>
                 </>
-                ):(
-                    <>
-                <div className="homeButton">
-                    <Link to='/'>Home</Link>
-                </div>
-                <div className="loginButton">
-                    <Link to='login'>Login</Link>
-                </div>
-                <div className="signupButton">
-                <Link to='Signup'>Signup</Link>
-                </div>
+            ) : (
+                <>
+                    <div className="loginButton">
+                        <Link to='login'>Login</Link>
+                    </div>
+                    <div className="signupButton">
+                        <Link to='signup'>Signup</Link>
+                    </div>
                 </>
             )}
-            </div>
         </div>
-        </>
+    </div>
+</>
+
     )
 }
 

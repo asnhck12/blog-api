@@ -1,6 +1,8 @@
 import {useState, useEffect} from "react";
 import './PostPage.css';
 import { useParams } from 'react-router-dom';
+import { useOutletContext } from "react-router-dom";
+import { fetchWithAuth } from "../../../utils/api";
 
 function PostPage () {
     const { id } = useParams();
@@ -8,6 +10,33 @@ function PostPage () {
     const [name, setName] = useState("");
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const { loggedInStatus } = useOutletContext();
+
+    const handleDelete = async (postId, commentId) => {
+        try {
+            const response = await fetchWithAuth(`http://localhost:3000/posts/${postId}/comments/${commentId}/delete`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!response.ok) {
+                if (response.status === 404) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message);
+                }
+                throw new Error('Failed to delete post');
+            }
+    
+            console.log('Post deleted successfully');
+    
+            // Update the comments state after deletion
+            setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,6 +131,9 @@ function PostPage () {
                 <div key={comment._id} className="comment">
                     <h3>{comment.name}</h3>
                     <p>{comment.comment}</p>
+                    {loggedInStatus ? (
+                            <button type = "button" onClick={() => handleDelete(specificPost._id, comment._id)}>Delete</button>
+                        ) : null}
                     </div>
             ))}
         </div>

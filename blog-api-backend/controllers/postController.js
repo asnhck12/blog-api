@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 // View posts
 exports.post_get = asyncHandler(async (req, res, next) => {
     try {
-        const allPosts = await Post.find().sort({ timeStamp: -1 }).exec();
+        const allPosts = await Post.find().populate('username', 'username').sort({ timeStamp: -1 }).exec();
         // const postsSummary = allPosts.map(post => ({ title: post.title, timeStamp: post.timeStamp }));
         res.json(allPosts);
     } catch (error) {
@@ -74,7 +74,7 @@ exports.post_delete = asyncHandler(async (req, res, next) => {
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }
-        res.status(204).json({ message: "Post deleted" });
+        res.status(204).send();
     } catch (error) {
         next(error);
     }

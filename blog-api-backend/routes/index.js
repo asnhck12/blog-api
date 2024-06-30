@@ -34,6 +34,6 @@ router.get('/posts/:id/comments', comment_controller.comment_get);
 router.post('/posts/:id/comments/new_comment', comment_controller.comment_create_send);
 
 //Delete comments
-router.post('/posts/:id/comments/delete', verifyToken, comment_controller.comment_delete);
+router.post('/posts/:id/comments/:commentId/delete', verifyToken, comment_controller.comment_delete);
 
 module.exports = router;

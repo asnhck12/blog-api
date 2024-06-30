@@ -49,11 +49,12 @@ exports.comment_create_send = [
 // Delete comment
 exports.comment_delete = asyncHandler(async (req, res, next) => {
     try {
-        const comment = await Comment.findByIdAndDelete(req.params.id);
+        const {commentId} = req.params;
+        const comment = await Comment.findByIdAndDelete(commentId);
         if (!comment) {
             return res.status(404).json({ message: "Comment not found" });
         }
-        res.status(204).json({ message: "Comment deleted" });
+        res.status(204).send();
     } catch (error) {
         next(error);
     }
