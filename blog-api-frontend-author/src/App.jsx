@@ -9,11 +9,11 @@ import { useEffect } from 'react'
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(isAuthenticated());
 
   useEffect(() => {
     const authenticateUsers = async () => {
-        if (isAuthenticated) {
+        if (isAuthenticated()) {
           setLoggedIn(true);
         }
         else if (!isAuthenticated) {

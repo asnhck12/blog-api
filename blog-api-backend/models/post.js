@@ -12,7 +12,7 @@ const PostSchema = new Schema({
 })
 
 PostSchema.virtual("url").get(function() {
-    return "/" + this._id;
+    return "/posts/" + this._id;
 })
 
 PostSchema.virtual("date_formatted").get(function () {

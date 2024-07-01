@@ -3,12 +3,15 @@ export const isAuthenticated = () => {
     const token = localStorage.getItem('token');
     if (token) {
       return true;
-    } else {
+    } else if (!token) {
       return false;
+    }
+    else {
+      console.log("error");
     }
   };
   
-  export const getToken = () => {
-    return localStorage.getItem('token');
-  };
+  // export const getToken = () => {
+  //   return localStorage.getItem('token');
+  // };
   

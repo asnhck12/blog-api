@@ -21,7 +21,7 @@ exports.log_in_post = (req, res, next) => {
                 if (err) {
                     return next(err);
                 }
-                const token = jwt.sign({ user }, process.env.jwtSecret, { expiresIn: '1h' });
+                const token = jwt.sign({ user }, process.env.jwtSecret);
 
                 return res.status(200).json({ message: "Login successful", token });
             });

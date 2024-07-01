@@ -16,13 +16,16 @@ router.post('/signup', user_controller.sign_up_post);
 router.post('/log_out', user_controller.log_out);
 
 // GET Posts 
-router.get('/posts', post_controller.post_get);
+router.get('/posts', verifyToken, post_controller.post_get);
 
 // GET single Post by ID  
-router.get('/posts/:id', post_controller.post_detail);
+router.get('/posts/:id', verifyToken, post_controller.post_detail);
 
 //submit Posts
 router.post('/posts/new_post', verifyToken, post_controller.post_create_send);
+
+//Update Posts
+router.post('/posts/:id/update', verifyToken, post_controller.post_update);
 
 //Delete Posts
 router.post('/posts/:id/delete', verifyToken, post_controller.post_delete);

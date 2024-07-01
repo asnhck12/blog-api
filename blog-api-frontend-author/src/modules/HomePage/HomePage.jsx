@@ -11,10 +11,9 @@ function HomePage() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/posts');
+                const response = await fetchWithAuth('http://localhost:3000/posts');
                 const responseData = await response.json();
-                console.log("Fetched posts:", responseData);
-                console.log(loggedInStatus);
+                console.log("status for logged in: ", loggedInStatus);
                 setPosts(responseData);
             } catch (error) {
                 console.log("Error fetching posts", error);
@@ -57,24 +56,39 @@ function HomePage() {
                 <div className="homePageTitle">
                     <h1>My Posts</h1>
                 </div>
-                {loggedInStatus ? (
+                {!loggedInStatus ? (
+                    <>
+                    <Link to={'/login'}><p>Please Log in</p></Link>
+                    </>
+                ) : (
                     <div className="newPostButton">
                         <Link to={'/new_post'}>
                             <button>Add a New Post</button>
                         </Link>
                     </div>
-                ) : null}
+                )}
             </div>
             <div className="mainContent">
-                {posts.map((post) => (
-                    <div key={post._id} className="postSection">
-                        <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
-                        <p>by {post.username.username}, {post.timeStamp}</p>
-                        {loggedInStatus ? (
-                            <button type = "button" onClick={() => handleDelete(post._id)}>Delete</button>
-                        ) : null}
-                    </div>
-                ))}
+                {loggedInStatus && (
+                    <>
+                        {Array.isArray(posts) && posts.length > 0 ? (
+                            posts.map((post) => (
+                                <div key={post._id} className="postSection">
+                                    <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
+                                    <p>by {post.username.username}, {post.timeStamp}</p>
+                                    {post.published ? (
+                                        <p>Published</p>
+                                    ) : (
+                                        <p>Not Published</p>
+                                    )}
+                                    <button type="button" onClick={() => handleDelete(post._id)}>Delete</button>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No posts available</p>
+                        )}
+                    </>
+                )}
             </div>
         </div>
     );

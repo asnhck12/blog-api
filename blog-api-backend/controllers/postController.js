@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
 // View posts
 exports.post_get = asyncHandler(async (req, res, next) => {
     try {
-        const allPosts = await Post.find().populate('username', 'username').sort({ timeStamp: -1 }).exec();
-        // const postsSummary = allPosts.map(post => ({ title: post.title, timeStamp: post.timeStamp }));
+        const userId = req.user.user._id;
+        const allPosts = await Post.find({ username: userId }).populate('username', 'username').sort({ timeStamp: -1 }).exec();
         res.json(allPosts);
     } catch (error) {
         next(error);
@@ -19,6 +19,7 @@ exports.post_get = asyncHandler(async (req, res, next) => {
 exports.post_detail = asyncHandler(async (req, res, next) => {
     try {
         const postId = req.params.id;
+        console.log("params" + req.params.id)
         const post = await Post.findById(postId).exec();
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
@@ -53,12 +54,49 @@ exports.post_create_send = [
             post: req.body.post,
             timeStamp: new Date(),
             published: req.body.published,
-            username: req.user,
+            username: req.user.user._id,
         });
 
         try{
             const savedPost = await post.save();
             res.status(201).json(savedPost);
+        } catch (error) {
+            next(error);
+        }
+    })
+})
+];
+
+exports.post_update = [
+    body("title", "Please enter a title more than 3 letters").trim().isLength({ min: 3 }).escape(),
+    body("post", "Please enter a post more than 3 letters").trim().isLength({ min: 3 }).escape(),
+    body("published").isBoolean().withMessage("Published must be a boolean"),
+
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        jwt.verify(req.token, process.env.jwtSecret, async (err, authData) => {
+
+            if (err) {
+                return res.sendStatus(403); // Forbidden
+            }
+
+        const post = new Post({
+            _id: req.params.id,
+            title: req.body.title,
+            post: req.body.post,
+            timeStamp: new Date(),
+            published: req.body.published,
+            username: req.user.user._id,
+        });
+
+        try{
+            await Post.findByIdAndUpdate(req.params.id, post);
+            res.redirect(post.url);
         } catch (error) {
             next(error);
         }
