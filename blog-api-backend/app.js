@@ -11,8 +11,6 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const User = require("./models/user");
 
-// const jwt = require('jsonwebtoken');
-
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -42,7 +40,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-// app.use(jwt({secret: jwtSecret}).unless({path: ['/login', '/signup']}));
 
 
 app.use(passport.initialize());
@@ -80,7 +77,6 @@ passport.deserializeUser(async (id, done) => {
 });
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
