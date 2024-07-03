@@ -81,26 +81,30 @@ function PostPage () {
     <>
     <div className="mainPostSection">
         <div className="mainPostContent">
-                    <h3>{specificPost.title}</h3>
-                    <p>{specificPost.timeStamp}</p>
+                    <h1>{specificPost.title}</h1>
+                    <p>Written by {specificPost.username.username} </p>
+                    <p>Published {specificPost.date_formatted}</p>
                     <p>{specificPost.post}</p>
         </div>
         <div className="commentSection">
+            <h2>Comments</h2>
             <div className="commentSubmission">
             <form method="post" onSubmit={handleSubmit}>
                 <div className="newCommentForm">
                     <label htmlFor="name">Name</label>
                     <input type="text" name="name" value={name || ""} onChange={(e) => setName(e.target.value)} required/>
-                    <label htmlFor="comment">Comment</label>
-                    <input type="text" name="comment" value={comment || ""} onChange={(e) => setComment(e.target.value)} required/>
-                    <button type="submit">Submit</button>
+                    <label htmlFor="comment">Leave a Comment</label>
+                    <input type="text" name="comment" className="commentText" value={comment || ""} onChange={(e) => setComment(e.target.value)} required/>
+                    <div className="submissionButton">
+                        <button type="submit">Submit</button>
+                    </div>
                 </div>
             </form>
             </div>
             <div className="comments">
             {comments.map((comment) => (
                 <div key={comment._id} className="comment">
-                    <h3>{comment.name}</h3>
+                    <p><b>{comment.name}</b> says:</p>
                     <p>{comment.comment}</p>
                     </div>
             ))}

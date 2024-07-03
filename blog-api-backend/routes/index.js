@@ -15,11 +15,14 @@ router.post('/signup', user_controller.sign_up_post);
 // Log out
 router.post('/log_out', user_controller.log_out);
 
-// GET Posts 
+// GET Auth Posts 
 router.get('/posts', verifyToken, post_controller.post_get);
 
+//Get all Posts
+router.get('/allposts', post_controller.post_get_all);
+
 // GET single Post by ID  
-router.get('/posts/:id', verifyToken, post_controller.post_detail);
+router.get('/posts/:id', post_controller.post_detail);
 
 //submit Posts
 router.post('/posts/new_post', verifyToken, post_controller.post_create_send);

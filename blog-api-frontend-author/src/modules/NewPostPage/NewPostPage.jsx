@@ -49,16 +49,20 @@ function NewPostPage () {
 
     return (
     <>
-    <div className="mainSignupSection">
+    <div className="mainNewPostSection">
         <form method="post"  onSubmit={handleSubmit}>
-            <div className='signupForm'>                
+            <div className='newPostForm'>                
                 <label htmlFor="title">Title</label>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
+                <input className="titleInput" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
                 <label htmlFor="post">Post</label>
-                <textarea value={post} onChange={(e) => setPost(e.target.value)} required/>
-                <label htmlFor="published">Publish</label>
-                <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)}/>
-                <button type="submit">Submit</button>
+                <textarea className="postInput" value={post} onChange={(e) => setPost(e.target.value)} required/>
+                <div className="publishCheckbox">
+                    <label htmlFor="published">Publish</label>
+                    <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)}/>
+                </div>
+                <div className="submitPostButton">
+                    <button type="submit">Submit</button>
+                </div>
             </div>
         </form>
     </div>

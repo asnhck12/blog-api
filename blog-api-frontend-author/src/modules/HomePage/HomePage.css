@@ -1,7 +1,50 @@
 
 .mainSection {
     display: flex;
-    /* justify-content: center; */
     flex:auto;
     flex-direction: column;
+  }
+
+  .mainContent {
+    width: 100%;
+  }
+
+  .postSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+  .postSection h2 {
+    align-content: center;
+    width: 50%;
+  }
+
+  .homePageTitle {
+    margin-bottom: 50px;
+  }
+
+  .postTitle {
+    width: 40%;
+    text-align: left;
+  }
+
+  .postPublishedStatus {
+    width: 20%;
+    text-align: center;
+  }
+
+  .postSubmit {
+    width: 40%;
+    text-align: right;
+    align-content: center;
+  }
+
+  .newPostButton {
+    padding-bottom: 30px;
+  }
+
+  .newPostButton button {
+    border: 1px black solid;
   }

@@ -8,10 +8,9 @@
 
 .navBar {
     display: grid;
-  grid-template-columns: 1fr 1fr 60px;
     font-size: x-large;
-    align-items: center;
-    /* text-align: right; */
+    /* align-items: center; */
+    text-align: right;
 }
 
 .logo {

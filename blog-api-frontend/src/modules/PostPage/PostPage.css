@@ -1,16 +1,58 @@
+.commentSection { 
+  display: flex;
+  justify-content: left;
+  width: 35%;
+  flex-direction: column;
+}
+
+.commentSection h2 { 
+  text-align: left;
+}
+
+.newCommentForm { 
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+}
+
+.newCommentForm button { 
+  border: 1px black solid;
+  margin-top: 20px;
+}
+
+.commentText {
+  height: 100px
+}
+
 .commentSubmission {
     display: flex;
-    justify-content: center;
-    flex:auto;
     margin-bottom:30px;
+    text-align: left;
   }
 
   .mainPostContent {
     margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .mainPostContent p {
+    text-align: left;
   }
 
   .mainPostSection {
     display: flex;
     flex:auto;
     flex-direction: column;
+  }
+
+  .comments {
+    text-align: left;
+  }
+
+  .submissionButton {
+    text-align: right;
+  }
+
+  .comment {
+    margin-bottom: 30px;
   }

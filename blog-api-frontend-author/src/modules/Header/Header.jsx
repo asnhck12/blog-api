@@ -53,7 +53,7 @@ function Header ({setLoggedIn}) {
             {isLoggedIn ? (
                 <>
                     <div className="logoutButton">
-                        <button onClick={handleLogout}>Logout</button>
+                        <a href="#" onClick={handleLogout}>Logout</a>
                     </div>
                 </>
             ) : (

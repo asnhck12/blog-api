@@ -1,16 +1,33 @@
 .commentSubmission {
     display: flex;
     justify-content: center;
-    flex:auto;
     margin-bottom:30px;
+  }
+
+  .commentSection h2 { 
+    text-align: left;
   }
 
   .mainPostContent {
     margin-bottom: 30px;
+    text-align: left;
   }
 
   .mainPostSection {
     display: flex;
     flex:auto;
     flex-direction: column;
+  }
+
+
+  .commentSection h2 { 
+    text-align: left;
+  }
+ 
+  .comments {
+    text-align: left;
+  }
+
+  .comment {
+    margin-bottom: 30px;
   }

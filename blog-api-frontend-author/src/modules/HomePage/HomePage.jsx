@@ -54,11 +54,11 @@ function HomePage() {
         <div className="mainSection">
             <div className="newPostSection">
                 <div className="homePageTitle">
-                    <h1>My Posts</h1>
+                    <h1>Posts</h1>
                 </div>
                 {!loggedInStatus ? (
                     <>
-                    <Link to={'/login'}><p>Please Log in</p></Link>
+                    <Link to={'/login'}><p>Please Log in to view your posts</p></Link>
                     </>
                 ) : (
                     <div className="newPostButton">
@@ -74,14 +74,19 @@ function HomePage() {
                         {Array.isArray(posts) && posts.length > 0 ? (
                             posts.map((post) => (
                                 <div key={post._id} className="postSection">
-                                    <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
-                                    <p>by {post.username.username}, {post.timeStamp}</p>
+                                    <div className="postTitle">
+                                        <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
+                                    </div>
+                                    <div className="postPublishedStatus">
                                     {post.published ? (
                                         <p>Published</p>
                                     ) : (
                                         <p>Not Published</p>
                                     )}
-                                    <button type="button" onClick={() => handleDelete(post._id)}>Delete</button>
+                                    </div>
+                                    <div className="postSubmit">
+                                        <button type="button" onClick={() => handleDelete(post._id)}>Delete</button>
+                                    </div>
                                 </div>
                             ))
                         ) : (

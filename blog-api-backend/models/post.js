@@ -9,7 +9,9 @@ const PostSchema = new Schema({
     timeStamp: { type: Date, default: Date.now },
     published: {type: Boolean},
     username: { type: Schema.ObjectId, ref: "User", required: true },
-})
+}, {
+    toJSON: {virtuals: true}
+});
 
 PostSchema.virtual("url").get(function() {
     return "/posts/" + this._id;

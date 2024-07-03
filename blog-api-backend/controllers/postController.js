@@ -4,7 +4,7 @@ const Post = require("../models/post");
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-// View posts
+// View auth posts
 exports.post_get = asyncHandler(async (req, res, next) => {
     try {
         const userId = req.user.user._id;
@@ -15,12 +15,24 @@ exports.post_get = asyncHandler(async (req, res, next) => {
     }
 });
 
+// View all posts
+exports.post_get_all = asyncHandler(async (req, res, next) => {
+    try {
+        const allPosts = await Post.find({published: true}).populate('username', 'username').sort({ timeStamp: -1 }).exec();
+        res.json(allPosts);
+    } catch (error) {
+        next(error);
+    }
+});
+
+
 // View post in full
 exports.post_detail = asyncHandler(async (req, res, next) => {
     try {
         const postId = req.params.id;
-        console.log("params" + req.params.id)
-        const post = await Post.findById(postId).exec();
+        // const userId = req.user.user._id;
+        // const post = await Post.findById(postId).populate('username', 'username').exec();
+        const post = await Post.findById(postId).populate('username', 'username').exec();
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }

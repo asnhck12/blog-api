@@ -7,22 +7,20 @@ function Header () {
         <>
         <div className="header">
             <div className="logo">
-                <Link to='/'>
-                <h1>Blog<br />
-                                Lite</h1>
-            </Link>                    
+                <h1><Link to='/'>Blog<br />
+                                Lite</Link> </h1>                   
             </div>
-            {/* <div className="navBar">
+            <div className="navBar">
                 <div className="homeButton">
                     <Link to='/'>Home</Link>
                 </div>
-                <div className="loginButton">
+                {/* <div className="loginButton">
                     <Link to='login'>Login</Link>
                 </div>
                 <div className="signupButton">
                 <Link to='Signup'>Signup</Link>
-                </div>
-            </div> */}
+                </div> */}
+            </div>
         </div>
         </>
     )

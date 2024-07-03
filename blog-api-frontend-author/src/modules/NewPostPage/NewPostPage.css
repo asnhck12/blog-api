@@ -1,0 +1,34 @@
+.mainNewPostSection {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    flex-direction: column;
+    text-align: left;
+    flex:auto;
+  }
+
+.mainNewPostSection form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: normal;
+    gap: 5px;
+}
+
+.newPostForm {
+        display: flex;
+        flex-direction: column;
+        width: inherit;
+      }
+
+.titleInput {
+    width: 35%;
+}
+.postInput {
+    width: 100%;
+  height: 300px;
+}
+
+.submitPostButton {
+    text-align: center;
+}
