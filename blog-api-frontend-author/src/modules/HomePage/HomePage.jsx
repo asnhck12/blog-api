@@ -11,7 +11,7 @@ function HomePage() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetchWithAuth('http://localhost:3000/posts');
+                const response = await fetchWithAuth('https://blog-api-backend-lilac.vercel.app/posts');
                 const responseData = await response.json();
                 console.log("status for logged in: ", loggedInStatus);
                 setPosts(responseData);
@@ -25,7 +25,7 @@ function HomePage() {
 
     const handleDelete = async (postId) => {
         try {
-            const response = await fetchWithAuth(`http://localhost:3000/posts/${postId}/delete`, {
+            const response = await fetchWithAuth(`https://blog-api-backend-lilac.vercel.app/posts/${postId}/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -17,7 +17,7 @@ function Header ({setLoggedIn}) {
         const token = localStorage.getItem('token');
     
         try {
-            const response = await fetchWithAuth('http://localhost:3000/log_out', {
+            const response = await fetchWithAuth('https://blog-api-backend-lilac.vercel.app/log_out', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

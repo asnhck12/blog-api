@@ -14,12 +14,6 @@ function Header () {
                 <div className="homeButton">
                     <Link to='/'>Home</Link>
                 </div>
-                {/* <div className="loginButton">
-                    <Link to='login'>Login</Link>
-                </div>
-                <div className="signupButton">
-                <Link to='Signup'>Signup</Link>
-                </div> */}
             </div>
         </div>
         </>

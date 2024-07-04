@@ -8,7 +8,7 @@ function HomePage () {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/allposts');
+                const response = await fetch('https://blog-api-backend-lilac.vercel.app/allposts');
                 const responseData = await response.json();
                 setPosts(responseData);
             } catch (error) {

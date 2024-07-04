@@ -19,7 +19,7 @@ function PostPage () {
         };
 
         try {
-            const response = await fetch(`http://localhost:3000/posts/${id}/comments/new_comment`, {
+            const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}/comments/new_comment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -47,9 +47,9 @@ function PostPage () {
     
     const fetchComments = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/posts/${id}/comments`);
+            const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}/comments`);
             const responseData = await response.json();
-            console.log("Fetched comments:", responseData); // Log fetched data
+            console.log("Fetched comments:", responseData);
             setComments(responseData);
         } catch (error) {
             console.log("error fetching comments", error);
@@ -62,7 +62,7 @@ function PostPage () {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response =  await fetch(`http://localhost:3000/posts/${id}`);
+                const response =  await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}`);
                 const responseData = await response.json();
                 console.log('response' + responseData);
                 setSpecificPost(responseData);

@@ -20,7 +20,7 @@ function NewPostPage () {
         };
 
         try {
-            const response = await fetchWithAuth('http://localhost:3000/posts/new_post', {
+            const response = await fetchWithAuth('https://blog-api-backend-lilac.vercel.app/posts/new_post', {
                 method: 'POST',
                 body: JSON.stringify(newPostData)
              
