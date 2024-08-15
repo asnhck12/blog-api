@@ -9,7 +9,6 @@
 .navBar {
     display: grid;
     font-size: x-large;
-    /* align-items: center; */
     text-align: right;
 }
 
@@ -21,28 +20,6 @@
     width: 40px;
     height: auto;
 }
-
-.itemsCount {
-    vertical-align: top;
-}
-
-.shoppingCart {
-    position: relative;
-    display: inline-block;
-}
-
-.itemsCount {
-    position: absolute;
-    bottom: 15px;
-    right: 1px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 5px 10px;
-    font-size: 12px;
-    font-weight: bold;
-
-  }
 
   a {
     color: black;
