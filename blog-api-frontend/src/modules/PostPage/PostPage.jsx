@@ -94,7 +94,7 @@ function PostPage () {
                     <label htmlFor="name">Name</label>
                     <input type="text" name="name" value={name || ""} onChange={(e) => setName(e.target.value)} required/>
                     <label htmlFor="comment">Leave a Comment</label>
-                    <input type="text" name="comment" className="commentText" value={comment || ""} onChange={(e) => setComment(e.target.value)} required/>
+                    <textarea type="text" name="comment" className="commentText" value={comment || ""} onChange={(e) => setComment(e.target.value)} required/>
                     <div className="submissionButton">
                         <button type="submit">Submit</button>
                     </div>

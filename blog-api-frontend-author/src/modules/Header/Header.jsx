@@ -44,8 +44,9 @@ function Header ({setLoggedIn}) {
         <>
     <div className="header">
         <div className="logo">
-            <h1>Blog<br />Lite</h1>
-        </div>
+                <h1><Link to='/'>Blog<br />
+                                Lite</Link> </h1>                   
+            </div>
         <div className="navBar">
             <div className="homeButton">
                 <Link to='/'>Home</Link>

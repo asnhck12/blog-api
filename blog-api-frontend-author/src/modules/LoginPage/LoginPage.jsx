@@ -6,6 +6,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 function LoginPage () {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(""); 
     const { setLoggedInStatus } = useOutletContext();
 
     const navigate = useNavigate();
@@ -28,12 +29,12 @@ function LoginPage () {
             });
 
             if (!response.ok) {
+                const result = await response.json();
+                setErrorMessage(result.message || 'Failed to log in');
                 throw new Error('Failed to submit login');
             }
 
             const result = await response.json();
-            console.log('Login successfully:', result);
-            console.log('Login successfully token:', result.token);
 
             localStorage.setItem('token', result.token);
             setLoggedInStatus(true);
@@ -41,6 +42,7 @@ function LoginPage () {
             // Clear form fields
             setUsername('');
             setPassword('');
+            setErrorMessage('');
 
             navigate('/');
             
@@ -58,6 +60,7 @@ function LoginPage () {
                 <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} required/>
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} required/>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <button type="submit">Login</button>
             </div>
         </form>

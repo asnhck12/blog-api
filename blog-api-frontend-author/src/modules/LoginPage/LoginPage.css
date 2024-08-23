@@ -8,3 +8,8 @@
     margin-top: 30px;
     border: 1px black solid;
   }
+
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+}
