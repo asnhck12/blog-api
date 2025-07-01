@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import './HomePage.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useOutletContext } from "react-router-dom";
 import { fetchWithAuth } from "../../../utils/api";
+import placeholder from '../../assets/image_placeholder.png';
+import addicon from '../../assets/addicon.svg';
+import deleteicon from '../../assets/deleteicon.svg';
 
 function HomePage() {
     const [posts, setPosts] = useState([]);
@@ -42,58 +45,66 @@ function HomePage() {
     
             console.log('Post deleted successfully');
     
-            // Update the posts state after deletion
             setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
         } catch (error) {
             console.error('Error deleting post:', error);
         }
-    };
-    
 
+    };
+
+    if (!loggedInStatus) return <Navigate to="/login" />
+    
     return (
         <div className="mainSection">
             <div className="newPostSection">
-                <div className="homePageTitle">
-                    <h1>Posts</h1>
+                <Link to={'/new_post'}>
+                <div className="newPostButton">
+                    <img src={addicon} />
                 </div>
-                {!loggedInStatus ? (
-                    <>
-                    <Link to={'/login'}><p>Please Log in to view your posts</p></Link>
-                    </>
-                ) : (
-                    <div className="newPostButton">
-                        <Link to={'/new_post'}>
-                            <button>Add a New Post</button>
-                        </Link>
-                    </div>
-                )}
+                </Link>
             </div>
             <div className="mainContent">
-                {loggedInStatus && (
-                    <>
-                        {Array.isArray(posts) && posts.length > 0 ? (
-                            posts.map((post) => (
-                                <div key={post._id} className="postSection">
-                                    <div className="postTitle">
-                                        <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
+                <div className="blogLists">
+                    {loggedInStatus && (
+                        <>
+                            {Array.isArray(posts) && posts.length > 0 ? (
+                                posts.map((post) => (
+                                    <div key={post._id} className="postSectionContainer">
+                                        <div className="postSection">
+                                            <div className="postImg">
+                                                <img src={placeholder}/>
+                                            </div>
+                                            <div className="postDetails">
+                                                <div className="postDetailsTitle">
+                                                    <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
+                                                </div>
+                                                <div className="postDetailsAndDelete">
+                                                    <div className="postDetails">
+                                                        <div className="postPublishedStatus">
+                                                        {post.published ? (
+                                                            <p>Published</p>
+                                                        ) : (
+                                                            <p>Not Published</p>
+                                                        )}
+                                                        </div>
+                                                        <div className="postDetailsDate">
+                                                            <p>{post.date_formatted}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="postDeleteButton">
+                                                        <img src={deleteicon} onClick={() => handleDelete(post._id)}/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="postPublishedStatus">
-                                    {post.published ? (
-                                        <p>Published</p>
-                                    ) : (
-                                        <p>Not Published</p>
-                                    )}
-                                    </div>
-                                    <div className="postSubmit">
-                                        <button type="button" onClick={() => handleDelete(post._id)}>Delete</button>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No posts available</p>
-                        )}
-                    </>
-                )}
+                                ))
+                            ) : (
+                                <p>No posts available</p>
+                            )}
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -1,15 +1,15 @@
 .header {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    margin-right: 20px;
-    margin-left: 20px;
 }
 
 .navBar {
-    display: grid;
-    font-size: x-large;
-    text-align: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
 }
 
 .logo {
@@ -28,4 +28,10 @@
   
   a:active {
     color: grey;
+  }
+
+  @media (max-width: 380px){
+  .navBar {
+    gap: 20px;
+  }
   }

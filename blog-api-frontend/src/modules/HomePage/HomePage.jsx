@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import './HomePage.css';
 import { Link } from 'react-router-dom';
+import placeholder from '../../assets/image_placeholder.png';
 
 function HomePage () {
     const [posts, setPosts] = useState([]);
@@ -22,15 +23,27 @@ function HomePage () {
     return (
     <>
     <div className="mainSection">
-    <div className="homePageTitle">
-        <h1>Posts</h1>
-        </div>
-        <div className="mainContent">
+        <div className="blogLists">
             {posts.map((post) => (
-                <div key={post._id} className="postSection">
-                    <h2><Link to={`/${post._id}`}>{post.title}</Link></h2>
-                    {/* <p>{post.username.username} </p> */}
-                    <p>{post.date_formatted}</p>
+                <div key={post._id} className="postSectionContainer">
+                    <div className="postSection">
+                        <div className="postImg">
+                            <img src={placeholder}/>
+                        </div>
+                        <div className="postDetails">
+                            <div className="postDetailsTitle">
+                                <h3><Link to={`/${post._id}`}>{post.title}</Link></h3>
+                            </div>
+                            <div className="postDetailsSubDesc">
+                                <div className="postDetailsDate">
+                                    <p>{post.date_formatted}</p>
+                                </div>
+                                <div className="postDetailsAuthor">
+                                    <p>by {post.username.username} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
                 </div>
             ))}
         </div>

@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../auth/auth';
 import { fetchWithAuth } from '../../../utils/api';
-// import { useOutletContext } from "react-router-dom";
+import homeIcon from '../../assets/homeIcon.svg'
+import signoutIcon from '../../assets/signoutIcon.svg'
 
 // eslint-disable-next-line react/prop-types
 function Header ({setLoggedIn}) {
 
     const navigate = useNavigate();
-    // const { loggedInStatus } = useOutletContext();
 
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -44,29 +44,25 @@ function Header ({setLoggedIn}) {
         <>
     <div className="header">
         <div className="logo">
-                <h1><Link to='/'>Blog<br />
-                                Lite</Link> </h1>                   
+                <h1><Link to='/'>Gabb</Link> </h1>                   
             </div>
-        <div className="navBar">
-            <div className="homeButton">
-                <Link to='/'>Home</Link>
+        <div className="navBarContainer">
+            <div className="navBar">
+                <div className="homeButton">
+                    <Link to='/'><img src={homeIcon} /></Link>
+                </div>
+                {isLoggedIn ? (
+                    <>
+                        <div className="logoutButton">
+                            <a href="#" onClick={handleLogout}><img src={signoutIcon} /></a>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        
+                    </>
+                )}
             </div>
-            {isLoggedIn ? (
-                <>
-                    <div className="logoutButton">
-                        <a href="#" onClick={handleLogout}>Logout</a>
-                    </div>
-                </>
-            ) : (
-                <>
-                    <div className="loginButton">
-                        <Link to='login'>Login</Link>
-                    </div>
-                    <div className="signupButton">
-                        <Link to='signup'>Signup</Link>
-                    </div>
-                </>
-            )}
         </div>
     </div>
 </>

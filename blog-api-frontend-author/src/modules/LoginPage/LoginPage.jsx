@@ -53,17 +53,20 @@ function LoginPage () {
 
     return (
     <>
-    <div className="mainLoginSection">
-        <form method="post" onSubmit={handleSubmit}>
+    <div className="loginPageContainer">
+        <div className="mainLoginSection">
             <div className='loginForm'>
-                <label htmlFor="username">Username</label>
-                <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} required/>
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} required/>
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
-                <button type="submit">Login</button>
-            </div>
-        </form>
+            <form method="post" onSubmit={handleSubmit}>                
+                    <label htmlFor="username">Username</label>
+                    <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} required/>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} required/>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    <button type="submit">Login</button>
+                    <button onClick={() => navigate('/signup')}>Signup</button>
+            </form>
+        </div>
+        </div>
     </div>
     </>
     )

@@ -80,26 +80,38 @@ function PostPage () {
     return (
     <>
     <div className="mainPostSection">
-        <div className="mainPostContent">
+        <div className="mainPostContentContainer">
+            <div className="mainPostContent">
+                <div className="mainPostContentTitle">
                     <h1>{specificPost.title}</h1>
-                    <p>Written by {specificPost.username.username} </p>
-                    <p>Published {specificPost.date_formatted}</p>
-                    <p>{specificPost.post}</p>
-        </div>
-        <div className="commentSection">
-            <h2>Comments</h2>
-            <div className="commentSubmission">
-            <form method="post" onSubmit={handleSubmit}>
-                <div className="newCommentForm">
-                    <label htmlFor="name">Name</label>
-                    <input type="text" name="name" value={name || ""} onChange={(e) => setName(e.target.value)} required/>
-                    <label htmlFor="comment">Leave a Comment</label>
-                    <textarea type="text" name="comment" className="commentText" value={comment || ""} onChange={(e) => setComment(e.target.value)} required/>
-                    <div className="submissionButton">
-                        <button type="submit">Submit</button>
-                    </div>
                 </div>
-            </form>
+                <div className="mainPostContentAuthor">
+                    <p>{specificPost.date_formatted}</p>
+                    <p>by {specificPost.username.username}</p>
+                </div>
+                <div className="mainPostContentArticle">
+                    <p>{specificPost.post}</p>
+                </div>
+            </div>
+        </div>
+        <div className="commentSectionContainer">
+            <div className="commentSection">
+            <div className="commentSectionTitle">
+                <h2>Comments</h2>
+            </div>
+            <div className="commentSubmission">
+                <form method="post" onSubmit={handleSubmit}>
+                    <div className="newCommentForm">
+                        <label htmlFor="name">Name</label>
+                        <input type="text" name="name" value={name || ""} onChange={(e) => setName(e.target.value)} required/>
+                        <label htmlFor="comment">Leave a Comment</label>
+                        <textarea type="text" name="comment" className="commentText" value={comment || ""} onChange={(e) => setComment(e.target.value)} required/>
+                        <div className="submissionButton">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             </div>
             <div className="comments">
             {comments.map((comment) => (

@@ -1,16 +1,49 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import './PostPage.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useOutletContext } from "react-router-dom";
 import { fetchWithAuth } from "../../../utils/api";
 
-function PostPage () {
+function PostPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [specificPost, setSpecificPost] = useState(null);
-    // const [name, setName] = useState("");
-    // const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
     const { loggedInStatus } = useOutletContext();
+
+    const [title, setTitle] = useState('');
+    const [post, setPost] = useState('');
+    const [published, setPublished] = useState(false);
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}`);
+                const data = await response.json();
+                setSpecificPost(data);
+                setTitle(data.title);
+                setPost(data.post);
+                setPublished(data.published);
+            } catch (error) {
+                console.log("Error fetching post:", error);
+            }
+        };
+        fetchPost();
+    }, [id]);
+
+    const fetchComments = async () => {
+        try {
+            const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}/comments`);
+            const data = await response.json();
+            setComments(data);
+        } catch (error) {
+            console.log("Error fetching comments:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchComments();
+    }, [id]);
 
     const handleDelete = async (postId, commentId) => {
         try {
@@ -22,38 +55,25 @@ function PostPage () {
             });
 
             if (!response.ok) {
-                if (response.status === 404) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message);
-                }
-                throw new Error('Failed to delete post');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to delete comment');
             }
-    
-            console.log('Post deleted successfully');
-    
-            // Update the comments state after deletion
-            setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
+
+            setComments(prev => prev.filter(comment => comment._id !== commentId));
         } catch (error) {
-            console.error('Error deleting post:', error);
+            console.error('Error deleting comment:', error);
         }
     };
 
-    const fetchComments = async () => {
-        try {
-            const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}/comments`);
-            const responseData = await response.json();
-            console.log("Fetched comments:", responseData); // Log fetched data
-            setComments(responseData);
-        } catch (error) {
-            console.log("error fetching comments", error);
-        }
-    };
-    useEffect(() => {
-    fetchComments();
-    }, [id]);
+    const handleSave = async (e) => {
+        e.preventDefault();
 
-    const handlePublishedChange = async (e) => {
-        const updatedPost = { ...specificPost, published: e.target.checked };
+        const updatedPost = {
+            title,
+            post,
+            published
+        };
+
         try {
             const response = await fetchWithAuth(`https://blog-api-backend-lilac.vercel.app/posts/${id}/update`, {
                 method: 'POST',
@@ -64,60 +84,54 @@ function PostPage () {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to update post');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to update post');
             }
 
-            setSpecificPost(updatedPost);
+            const result = await response.json();
+            console.log('Post updated successfully:', result);
+            setSpecificPost(result);
+            navigate('/');
         } catch (error) {
             console.error('Error updating post:', error);
         }
     };
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            try {
-                const response =  await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}`);
-                const responseData = await response.json();
-                console.log('response' + responseData);
-                setSpecificPost(responseData);
-            } catch (error) {
-                console.log("error fetching post " + error);
-            }
-            };
-            fetchPost();
-        }, [id]);
+    if (!specificPost) return <div>Loading...</div>;
 
-        if (!specificPost) {
-            return <div>Loading...</div>;
-        }
-    
     return (
-    <>
-    <div className="mainPostSection">
-        <div className="mainPostContent">
-                    <h1>{specificPost.title}</h1>
-                    <label htmlFor="published">Publish</label>
-                    <input type="checkbox" checked={specificPost.published} onChange={handlePublishedChange}/>
-                    <p>{specificPost.post}</p>
-        </div>
-        <div className="commentSection">
-            <div className="commentSubmission">
-            </div>
-            <div className="comments">
-            {comments.map((comment) => (
-                <div key={comment._id} className="comment">
-                    <p><b>{comment.name}</b> says:</p>
-                    <p>{comment.comment}</p>
-                    {loggedInStatus ? (
-                            <a href="#" onClick={() => handleDelete(specificPost._id, comment._id)}><b>Delete</b></a>
-                        ) : null}
+        <div className="mainPostSection">
+            <form onSubmit={handleSave}>
+                <div className="postForm">
+                    <label htmlFor="title">Title</label>
+                    <input className="titleInput" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
+                    <label htmlFor="post">Post</label>
+                    <textarea className="postInput" value={post} onChange={(e) => setPost(e.target.value)} required/>
+                    <div className="publishCheckbox">
+                        <label htmlFor="published">Publish</label>
+                        <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)}/>
                     </div>
-            ))}
+                    <div className="submitSaveButton">
+                        <button type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+
+            <div className="commentSection">
+                <div className="comments">
+                    {comments.map((comment) => (
+                        <div key={comment._id} className="comment">
+                            <p><b>{comment.name}</b> says:</p>
+                            <p>{comment.comment}</p>
+                            {loggedInStatus && (
+                                <a href="#" onClick={() => handleDelete(specificPost._id, comment._id)}><b>Delete</b></a>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
-        </div>
-    </div>
-    </>
-    )
+    );
 }
 
-export default PostPage
+export default PostPage;

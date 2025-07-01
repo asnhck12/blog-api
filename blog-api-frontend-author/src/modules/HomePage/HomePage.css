@@ -1,33 +1,99 @@
+p, h3 {
+  margin: 0;
+}
+
+.header h1 {
+  text-shadow: 5px 5px 9px gray;
+}
 
 .mainSection {
     display: flex;
     flex:auto;
     flex-direction: column;
-  }
-
-  .mainContent {
-    width: 100%;
-  }
-
-  .postSection {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }
 
+.mainSection img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
 
-  .postSection h2 {
-    align-content: center;
-    width: 50%;
+.blogLists {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-around; */
+  gap: 30px;
+  width: 100%;
+}
+
+.mainContent {
+    width: 100%;
+}
+
+.postSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+}
+
+.postSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+}
+
+.postSection div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.postSectionContainer {
+  flex: 1 1 calc(25% - 30px);
+  box-sizing: border-box;
+  padding: 10px;
+  box-shadow: 0 0 10px 5px black;
+  border-radius: 8px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  min-width: 150px;
+  max-width: 30%;
+}
+
+.postImg {
+width: 120px;
+flex-shrink: 0;
+}
+
+.postImg img {
+  width: 95%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.postDetails {
+  flex: 1;
+}
+
+.homePageTitle {
+  margin-bottom: 50px;
+}
+
+.navBar {
+  padding-right: 20px;
+}
+
+@media (max-width: 380px){
+  .postSectionContainer {
+    max-width: 100%;
   }
-
-  .homePageTitle {
-    margin-bottom: 50px;
-  }
-
-  .postTitle {
-    width: 40%;
-    text-align: left;
   }
 
   .postPublishedStatus {
@@ -43,8 +109,19 @@
 
   .newPostButton {
     padding-bottom: 30px;
+    width: 50px;
   }
 
   .newPostButton button {
     border: 1px black solid;
+  }
+
+  .newPostSection {
+    width: fit-content;
+  }
+
+  .postDeleteButton img {
+    align-self: end;
+    width: 30px;
+    cursor: pointer;
   }

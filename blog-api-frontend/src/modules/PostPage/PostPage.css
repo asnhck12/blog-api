@@ -1,11 +1,11 @@
-.commentSection { 
+.commentSectionContainer { 
   display: flex;
   justify-content: left;
   width: 35%;
   flex-direction: column;
 }
 
-.commentSection h2 { 
+.commentSectionContainer h2 { 
   text-align: left;
 }
 
@@ -28,31 +28,50 @@
     display: flex;
     margin-bottom:30px;
     text-align: left;
-  }
+}
 
-  .mainPostContent {
-    margin-bottom: 30px;
-    text-align: left;
-  }
+.mainPostContentContainer, .commentSectionContainer {
+  padding-left: 30px;
+  padding-right: 30px;
+  width: auto;
+}
+.mainPostContentAuthor {
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+  padding-top: 10px;
+}
 
-  .mainPostContent p {
-    text-align: left;
-  }
+.mainPostContentArticle {
+  padding-top: 20px;
+}
 
-  .mainPostSection {
-    display: flex;
-    flex:auto;
-    flex-direction: column;
-  }
+.mainPostContent p {
+  text-align: left;
+}
 
-  .comments {
-    text-align: left;
-  }
+.mainPostContent h1 {
+  text-align: left;
+  text-shadow: none;
+  margin: 0;
+}
 
-  .submissionButton {
-    text-align: right;
-  }
+.mainPostSection {
+  display: flex;
+  flex:auto;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
 
-  .comment {
-    margin-bottom: 30px;
-  }
+.comments {
+  text-align: left;
+}
+
+.submissionButton {
+  text-align: right;
+}
+
+.comment {
+  margin-bottom: 30px;
+}

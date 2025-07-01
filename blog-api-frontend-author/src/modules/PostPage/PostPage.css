@@ -15,10 +15,38 @@
 
   .mainPostSection {
     display: flex;
-    flex:auto;
+    justify-content: left;
+    width: 100%;
     flex-direction: column;
+    text-align: left;
+    flex:auto;
   }
 
+  .mainPostSection form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: normal;
+    gap: 5px;
+}
+
+.postForm {
+        display: flex;
+        flex-direction: column;
+        width: inherit;
+}
+
+.titleInput {
+    width: 35%;
+}
+.postInput {
+    width: 100%;
+  height: 300px;
+}
+
+.submitSaveButton {
+    text-align: center;
+}
 
   .commentSection h2 { 
     text-align: left;
