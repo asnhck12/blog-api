@@ -10,3 +10,9 @@
     justify-content: center;
     gap: 5px;
 }
+
+@media (max-width: 380px){
+  .gitHubText {
+    display:none;
+  }
+  }
