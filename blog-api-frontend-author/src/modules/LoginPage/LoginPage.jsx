@@ -11,8 +11,6 @@ function LoginPage () {
 
     const navigate = useNavigate();
 
-    console.log("API URL", API_URL);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
