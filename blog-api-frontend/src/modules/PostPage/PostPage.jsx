@@ -10,6 +10,8 @@ function PostPage () {
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
 
+    console.log("API URL", API_URL);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
