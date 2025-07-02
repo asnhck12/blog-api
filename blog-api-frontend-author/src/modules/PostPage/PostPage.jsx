@@ -3,6 +3,9 @@ import './PostPage.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOutletContext } from "react-router-dom";
 import { fetchWithAuth } from "../../../utils/api";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function PostPage() {
     const { id } = useParams();
@@ -18,7 +21,7 @@ function PostPage() {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}`);
+                const response = await fetch(`${API_URL}/posts/${id}`);
                 const data = await response.json();
                 setSpecificPost(data);
                 setTitle(data.title);
@@ -33,7 +36,7 @@ function PostPage() {
 
     const fetchComments = async () => {
         try {
-            const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}/comments`);
+            const response = await fetch(`${API_URL}/posts/${id}/comments`);
             const data = await response.json();
             setComments(data);
         } catch (error) {
@@ -47,7 +50,7 @@ function PostPage() {
 
     const handleDelete = async (postId, commentId) => {
         try {
-            const response = await fetchWithAuth(`https://blog-api-backend-lilac.vercel.app/posts/${postId}/comments/${commentId}/delete`, {
+            const response = await fetchWithAuth(`${API_URL}/posts/${postId}/comments/${commentId}/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -74,8 +77,10 @@ function PostPage() {
             published
         };
 
+        console.log("saved text; ", post);
+
         try {
-            const response = await fetchWithAuth(`https://blog-api-backend-lilac.vercel.app/posts/${id}/update`, {
+            const response = await fetchWithAuth(`${API_URL}/posts/${id}/update`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,10 +108,22 @@ function PostPage() {
         <div className="mainPostSection">
             <form onSubmit={handleSave}>
                 <div className="postForm">
-                    <label htmlFor="title">Title</label>
-                    <input className="titleInput" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
-                    <label htmlFor="post">Post</label>
-                    <textarea className="postInput" value={post} onChange={(e) => setPost(e.target.value)} required/>
+                    <div className="postTitleContainer">
+                        <label htmlFor="title">Title</label>
+                        <input className="titleInput" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
+                    </div>
+                    <div className="postContainer">
+                        <label htmlFor="post">Post</label>
+                        <ReactQuill value={post} onChange={setPost} theme="snow" modules={{
+                            toolbar: [
+                                [{ 'header': [1, 2, false] }],
+                                ['bold', 'italic', 'underline'],
+                                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                ['link'],
+                                ['clean']
+                            ]
+                        }}/>
+                    </div>
                     <div className="publishCheckbox">
                         <label htmlFor="published">Publish</label>
                         <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)}/>

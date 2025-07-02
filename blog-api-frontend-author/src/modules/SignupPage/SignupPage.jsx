@@ -1,6 +1,7 @@
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function SignupPage () {
     const [firstname, setFirstname] = useState("");
@@ -25,7 +26,7 @@ function SignupPage () {
         };
 
         try {
-            const response = await fetch('https://blog-api-backend-lilac.vercel.app/signup', {
+            const response = await fetch(`${API_URL}/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

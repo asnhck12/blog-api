@@ -1,61 +1,89 @@
 .commentSubmission {
-    display: flex;
-    justify-content: center;
-    margin-bottom:30px;
-  }
+  display: flex;
+  justify-content: center;
+  margin-bottom:30px;
+}
 
-  .commentSection h2 { 
-    text-align: left;
-  }
+.commentSection h2 { 
+  text-align: left;
+}
 
-  .mainPostContent {
-    margin-bottom: 30px;
-    text-align: left;
-  }
+.mainPostContent {
+  margin-bottom: 30px;
+  text-align: left;
+}
 
-  .mainPostSection {
-    display: flex;
-    justify-content: left;
-    width: 100%;
-    flex-direction: column;
-    text-align: left;
-    flex:auto;
-  }
+.mainPostSection {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  flex-direction: column;
+  text-align: left;
+  flex:1;
+}
 
-  .mainPostSection form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: normal;
-    gap: 5px;
+.mainPostSection form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: normal;
+  gap: 5px;
+  height: 400px;
+}
+
+.postTitleContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .postForm {
-        display: flex;
-        flex-direction: column;
-        width: inherit;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+  gap: 5px;
 }
 
-.titleInput {
-    width: 35%;
+.quill {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+
 }
+
+.ql-container {
+  overflow: scroll;
+}
+
 .postInput {
-    width: 100%;
+  width: 100%;
   height: 300px;
 }
 
 .submitSaveButton {
-    text-align: center;
+  text-align: center;
 }
 
-  .commentSection h2 { 
-    text-align: left;
-  }
- 
-  .comments {
-    text-align: left;
-  }
+.commentSection h2 { 
+  text-align: left;
+}
 
-  .comment {
-    margin-bottom: 30px;
-  }
+.comments {
+  text-align: left;
+}
+
+.comment {
+  margin-bottom: 30px;
+}
+
+.mainPostContentTitle h1 {
+  font-size: 60px;
+}
+
+.titleInput {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  padding: 6px 7px;
+  width: 35%;
+}

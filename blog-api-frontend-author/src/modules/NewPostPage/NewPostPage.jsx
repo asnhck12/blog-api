@@ -2,6 +2,9 @@ import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import './NewPostPage.css';
 import { fetchWithAuth } from "../../../utils/api";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function NewPostPage () {
     const [title, setTitle] = useState("");
@@ -20,7 +23,7 @@ function NewPostPage () {
         };
 
         try {
-            const response = await fetchWithAuth('https://blog-api-backend-lilac.vercel.app/posts/new_post', {
+            const response = await fetchWithAuth(`${API_URL}/posts/new_post`, {
                 method: 'POST',
                 body: JSON.stringify(newPostData)
              
@@ -33,6 +36,8 @@ function NewPostPage () {
 
             const result = await response.json();
             console.log('Post submitted successfully:', result);
+            console.log("saved text new; ", newPostData);
+            console.log("API URL: ", {API_URL});
 
             // Clear form fields
             setTitle('');
@@ -50,12 +55,24 @@ function NewPostPage () {
     return (
     <>
     <div className="mainNewPostSection">
-        <form method="post"  onSubmit={handleSubmit}>
-            <div className='newPostForm'>                
-                <label htmlFor="title">Title</label>
-                <input className="titleInput" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
-                <label htmlFor="post">Post</label>
-                <textarea className="postInput" value={post} onChange={(e) => setPost(e.target.value)} required/>
+        <div className='newPostForm'>
+            <form method="post"  onSubmit={handleSubmit}>
+                <div className="postTitleContainer">
+                    <label htmlFor="title">Title</label>
+                    <input className="titleInput" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
+                </div>
+                <div className="postContainer">
+                    <label htmlFor="post">Post</label>
+                    <ReactQuill value={post} onChange={setPost} theme="snow" modules={{
+                        toolbar: [
+                            [{ 'header': [1, 2, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link'],
+                            ['clean']
+                        ]
+                    }}/>
+                </div>
                 <div className="publishCheckbox">
                     <label htmlFor="published">Publish</label>
                     <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)}/>
@@ -63,8 +80,8 @@ function NewPostPage () {
                 <div className="submitPostButton">
                     <button type="submit">Submit</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
     </>
     )

@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import './HomePage.css';
 import { Link } from 'react-router-dom';
 import placeholder from '../../assets/image_placeholder.png';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function HomePage () {
     const [posts, setPosts] = useState([]);
@@ -9,7 +10,7 @@ function HomePage () {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('https://blog-api-backend-lilac.vercel.app/allposts');
+                const response = await fetch(`${API_URL}/allposts`);
                 const responseData = await response.json();
                 setPosts(responseData);
             } catch (error) {

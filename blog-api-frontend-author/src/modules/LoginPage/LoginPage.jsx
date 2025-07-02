@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './LoginPage.css';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 function LoginPage () {
     const [username, setUsername] = useState("");
@@ -20,7 +20,7 @@ function LoginPage () {
         };
 
         try {
-            const response = await fetch('https://blog-api-backend-lilac.vercel.app/login', {
+            const response = await fetch(`${API_URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

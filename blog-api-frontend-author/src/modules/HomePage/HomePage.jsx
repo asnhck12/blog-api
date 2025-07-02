@@ -6,6 +6,7 @@ import { fetchWithAuth } from "../../../utils/api";
 import placeholder from '../../assets/image_placeholder.png';
 import addicon from '../../assets/addicon.svg';
 import deleteicon from '../../assets/deleteicon.svg';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function HomePage() {
     const [posts, setPosts] = useState([]);
@@ -14,7 +15,7 @@ function HomePage() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetchWithAuth('https://blog-api-backend-lilac.vercel.app/posts');
+                const response = await fetchWithAuth(`${API_URL}/posts`);
                 const responseData = await response.json();
                 console.log("status for logged in: ", loggedInStatus);
                 setPosts(responseData);
@@ -28,7 +29,7 @@ function HomePage() {
 
     const handleDelete = async (postId) => {
         try {
-            const response = await fetchWithAuth(`https://blog-api-backend-lilac.vercel.app/posts/${postId}/delete`, {
+            const response = await fetchWithAuth(`${API_URL}/posts/${postId}/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

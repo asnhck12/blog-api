@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import './PostPage.css';
 import { useParams } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function PostPage () {
     const { id } = useParams();
@@ -19,7 +20,7 @@ function PostPage () {
         };
 
         try {
-            const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}/comments/new_comment`, {
+            const response = await fetch(`${API_URL}/posts/${id}/comments/new_comment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -47,7 +48,7 @@ function PostPage () {
     
     const fetchComments = async () => {
         try {
-            const response = await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}/comments`);
+            const response = await fetch(`${API_URL}/posts/${id}/comments`);
             const responseData = await response.json();
             console.log("Fetched comments:", responseData);
             setComments(responseData);
@@ -62,9 +63,9 @@ function PostPage () {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response =  await fetch(`https://blog-api-backend-lilac.vercel.app/posts/${id}`);
+                const response =  await fetch(`${API_URL}/posts/${id}`);
                 const responseData = await response.json();
-                console.log('response' + responseData);
+                console.log('Post HTML:', responseData.post);
                 setSpecificPost(responseData);
             } catch (error) {
                 console.log("error fetching post " + error);
@@ -90,7 +91,7 @@ function PostPage () {
                     <p>by {specificPost.username.username}</p>
                 </div>
                 <div className="mainPostContentArticle">
-                    <p>{specificPost.post}</p>
+                    <div dangerouslySetInnerHTML={{ __html: specificPost.post }} />
                 </div>
             </div>
         </div>
