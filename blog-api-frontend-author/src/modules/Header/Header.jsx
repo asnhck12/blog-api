@@ -45,7 +45,8 @@ function Header ({setLoggedIn}) {
         <>
     <div className="header">
         <div className="logo">
-                <h1><Link to='/'>Gabb</Link> </h1>                   
+                <h1><Link to='/'>Gabb</Link> </h1> 
+                <p>Creator</p>                  
             </div>
         <div className="navBarContainer">
             <div className="navBar">

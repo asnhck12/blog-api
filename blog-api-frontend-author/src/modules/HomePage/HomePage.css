@@ -2,10 +2,6 @@ p, h3 {
   margin: 0;
 }
 
-.header h1 {
-  text-shadow: 5px 5px 9px gray;
-}
-
 .mainSection {
     display: flex;
     flex:auto;

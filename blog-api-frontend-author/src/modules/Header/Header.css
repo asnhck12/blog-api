@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+
+.header h1, .logo p {
+  text-shadow: 5px 5px 9px gray;
+}
+
 .navBar {
     display: flex;
     flex-direction: row;
@@ -15,6 +20,16 @@
 .logo {
     text-align: left;
     padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo h1 {
+    margin-bottom: 0;
+}
+
+.logo p {
+    font-weight: 700;
 }
 
 .header img {
