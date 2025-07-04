@@ -106,8 +106,8 @@ function PostPage() {
 
     return (
         <div className="mainPostSection">
-            <form onSubmit={handleSave}>
-                <div className="postForm">
+            <div className="postForm">
+                <form onSubmit={handleSave}>
                     <div className="postTitleContainer">
                         <label htmlFor="title">Title</label>
                         <input className="titleInput" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
@@ -131,20 +131,21 @@ function PostPage() {
                     <div className="submitSaveButton">
                         <button type="submit">Save</button>
                     </div>
-                </div>
-            </form>
-
-            <div className="commentSection">
-                <div className="comments">
-                    {comments.map((comment) => (
-                        <div key={comment._id} className="comment">
-                            <p><b>{comment.name}</b> says:</p>
-                            <p>{comment.comment}</p>
-                            {loggedInStatus && (
-                                <a href="#" onClick={() => handleDelete(specificPost._id, comment._id)}><b>Delete</b></a>
-                            )}
-                        </div>
-                    ))}
+                </form>
+            </div>
+            <div className="commentSectionContainer">
+                <div className="commentSection">
+                    <div className="comments">
+                        {comments.map((comment) => (
+                            <div key={comment._id} className="comment">
+                                <p><b>{comment.name}</b> says:</p>
+                                <p>{comment.comment}</p>
+                                {loggedInStatus && (
+                                    <a href="#" onClick={() => handleDelete(specificPost._id, comment._id)}><b>Delete</b></a>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,17 @@
+.commentSectionContainer { 
+  display: flex;
+  justify-content: left;
+  width: 35%;
+  flex-direction: column;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: auto;
+}
+
+.commentSectionContainer h2 { 
+  text-align: left;
+}
+
 .commentSubmission {
   display: flex;
   justify-content: center;
@@ -20,6 +34,7 @@
   flex-direction: column;
   text-align: left;
   flex:1;
+  gap: 40px;
 }
 
 .mainPostSection form {
@@ -28,7 +43,7 @@
   width: 100%;
   align-items: normal;
   gap: 5px;
-  height: 400px;
+  height: fit-content;
 }
 
 .postTitleContainer {
