@@ -22,6 +22,6 @@ Live App: https://blog-api-frontend-theta.vercel.app/
 A frontend for Blog creators, which can only be accessed by registering for an account. Creators can can write, publish or unpublish blogsa and delete comments.
 Live App: https://blog-api-frontend-author.vercel.app/
 
-![Screenshot 2025-07-05 at 01-01-24 Gabb](https://github.com/user-attachments/assets/4b0180a2-1cfb-42e5-8a6d-c916aa8df547)
+![Screenshot 2025-07-05 at 01-49-13 Gabb](https://github.com/user-attachments/assets/762c196e-6f93-4af6-ad40-d3262ee0a027)
 
 ![Screenshot 2025-07-05 at 01-01-38 Gabb](https://github.com/user-attachments/assets/2f9155b5-ac41-447e-ad42-343907f553be)
