@@ -2,6 +2,8 @@
 
 A project that utilises an API backend.
 
+The backend: https://github.com/asnhck12/messaging-app-backend
+
 Two different Frontend Apps are created to utilise the API. 
 The backend and database handles data consisting of blogs, comments and users.
 
