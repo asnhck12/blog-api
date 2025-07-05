@@ -1,15 +1,27 @@
 # API Blog Project
 
-A MERN project that includes two different Frontend Apps interacting with the Backend data, which contains blogs, comments and users.
+A project that utilises an API backend.
+
+Two different Frontend Apps are created to utilise the API. 
+The backend and database handles data consisting of blogs, comments and users.
+
+The stack used for this project:
+
+ - MongoDB
+ - Express
+ - React
+ - Node JS
 
 ## Regular User Frontend
-A frontend for regular users where users can view blogs, view comments and add comments too.
+A frontend for regular users where they can view blogs, view and add comments.
 Live App: https://blog-api-frontend-theta.vercel.app/
 
-![Screenshot 2024-08-23 at 17-31-55 Blog Lite](https://github.com/user-attachments/assets/7b585e17-da2d-451a-82b4-3538e9566b66)
+![Screenshot 2025-07-05 at 01-02-42 Gabb](https://github.com/user-attachments/assets/a66bfd1a-97ef-4490-bd08-4cb6970e76a1)
 
-## Blog Author Frontend
-A frontend for Blog Authors where they can log in, publish/unpublish blogs and delete comments.
+## Blog Creator Frontend
+A frontend for Blog creators, which can only be accessed by registering for an account. Creators can can write, publish or unpublish blogsa and delete comments.
 Live App: https://blog-api-frontend-author.vercel.app/
 
-![Screenshot 2024-08-23 at 17-32-43 Blog Lite](https://github.com/user-attachments/assets/1830ae4d-cf2d-45ca-95a1-f2f453712017)
+![Screenshot 2025-07-05 at 01-01-24 Gabb](https://github.com/user-attachments/assets/4b0180a2-1cfb-42e5-8a6d-c916aa8df547)
+
+![Screenshot 2025-07-05 at 01-01-38 Gabb](https://github.com/user-attachments/assets/2f9155b5-ac41-447e-ad42-343907f553be)
